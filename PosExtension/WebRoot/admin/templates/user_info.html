@@ -1,0 +1,55 @@
+ 	<!-- 客户管理 -->
+<div class="button-group" id="userBtnGroup" style="margin-top:10px;width:800px;">
+  <input type="text" class="text-info comment-input " ng-model="userChannelId" style="width:300px;height:32px" placeholder="渠道id查询,为渠道url的channel_id后面的数字"/> 
+  <button type="button" class="btn  btn-success" style="width:155px;" ng-click="listUserByChannel()">查询</button>
+ </div>
+<hr/>
+	<!-- 渠道管理列表 -->
+<div style="overflow-x:auto;width:800px">
+<table class="table text-center table-striped" id="userList">
+ 
+ <thead>
+      <tr class="myactive"> 
+         <th class="text-center">用户名称</th>
+         <th class="text-center">手机号</th>
+         <th class="text-center">收货地址</th>
+         <th class="text-center">备注</th>
+         <th class="text-center">填写时间</th>
+         <th class="text-center">渠道id</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr class="myactive" ng-repeat="user in userList"> 
+         <td class="text-center"><span ng-bind="user.name"></span></td>
+         <td class="text-center"><span ng-bind="user.phone"></span></td>
+         <td class="text-center"><span ng-bind="user.address"></span></td>
+         <td class="text-center"><span ng-bind="user.remark"></span></td>
+         <td class="text-center"><span ng-bind="user.fill_time"></span></td>
+         <td class="text-center"><span ng-bind="user.channel_id"></span></td>
+      </tr>
+     
+   </tbody>
+</table>
+<!-- 无客户-->
+<div id="noUserList" class='text-center'></div>
+<!-- 无客户 end-->
+</div>
+<hr/>
+<a ng-click="downloadPDF()" class="btn btn-danger" style="color:white !important">下载PDF</a>
+<a ng-click="downloadXLS()" class="btn btn-danger" style="color:white !important">下载xls</a>
+<div class="pagination-warp">
+  <!-- <ul class="pagination pagination-lg">
+    <li>
+      <a href="#" id="prevElement" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="pageNumber"><a href="#">1</a></li>
+    <li>
+      <a href="#" id="nextElement" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul> -->
+  <ul class="pagination pagination-lg" id="merPagination"></ul>
+</div>

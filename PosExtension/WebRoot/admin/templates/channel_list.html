@@ -1,0 +1,29 @@
+ 	<!-- 渠道管理列表 -->
+<div style="overflow-x:auto;width:800px">
+<table class="table text-center table-striped" id="channelList">
+ 
+ <thead>
+      <tr class="myactive"> 
+         <th class="text-center">渠道名称</th>
+         <th class="text-center">渠道url</th>
+         <th class="text-center">开链时间</th>
+         <th class="text-center">操作</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr class="myactive" ng-repeat="channel in channelList"> 
+         <td class="text-center"><span ng-bind="channel.name"></span></td>
+         <td class="text-center"><span ng-bind="channel.url"></span></td>
+         <td class="text-center"><span ng-bind="channel.fill_time"></span></td>
+         <td class="text-center">
+         	<a ng-click="channelUpdate()">编辑</a>
+         	<a ng-click="channelDel()">删除</a>
+         </td>
+      </tr>
+     
+   </tbody>
+</table>
+<!-- 无渠道-->
+<div id="noChannelList" class='text-center'></div>
+<!-- 无渠道 end-->
+</div>

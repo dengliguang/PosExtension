@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pos机后台管理系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="pos机">
+<meta charset="UTF-8">
+<meta name="description"
+	content="POS是一种多功能终端，把它安装在信用卡的特约商户和受理网点中与计算机联成网络，就能实现电子资金自动转账，它具有支持消费、预授权、余额查询和转帐等功能，使用起来安全、快捷、可靠。大宗交易中基本经营情报难以获取，导入POS系统主要是解决零售业信息管理盲点。连锁分店管理信息系统中的重要组成部分。">
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/base.css" rel="stylesheet">
+</head>
+<body ng-app="indexApp" ng-controller="indexCtrl">
+
+<div >
+<img class="comment-wrap"alt="" src="/resources/img/pos/pos.jpg">
+<div class="comment-wrap" style="background-color:white;font-size:1.2rem;">
+	<form class="" role="form" style="color:rgb(56,152,229);margin:0 0 0 12%;">
+  <div class="comment-input">
+    <label >姓&#12288;&#12288;名:</label>
+      <input type="text" class="comment-input-margin" ng-model="userName" >
+  </div>
+  <div class="comment-input">
+    <label >手机号码:</label>
+      <input type="tel" class="comment-input-margin"  ng-model="userPhone" >
+  </div>
+  <div class="comment-input">
+    <label >联系地址:</label>
+      <input type="text" class="comment-input-margin" ng-model="userAddress">
+  </div>
+  <div class="comment-input">
+    <label >备&#12288;&#12288;注:</label>
+      <input type="text" class="comment-input-margin" ng-model="userRemark">
+  </div>
+ 
+  <div>
+      <button type="button" ng-click="formSubmit()" class="btn" style="border-radius:0;margin:22px 24% 50px 24%;width:30%;height:32px;background-color:rgb(56,152,229) !important;color:white">立即提交</button>
+  </div>
+</form>
+
+</div>
+</div>
+	
+	<script src="/resources/js/jquery2.1.js"></script>
+	<script src="/resources/js/bootstrap3.2.0.js"></script>
+	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
+	<script src="/resources/js/base.js"></script>
+	<script src="/resources/js/seller.js"></script>
+	<script>
+	angular.module('indexApp',[])
+	.config(function($httpProvider){
+		$httpProvider.defaults.transformRequest=function(obj){
+			var str=[];
+			for ( var p in obj) {
+				str.push(encodeURIComponent(p)+"="+encodeURIComponent(obj[p]))
+			}
+			return str.join("&");
+		}
+		$httpProvider.defaults.headers.post={
+			'Content-Type':'application/x-www-form-urlencoded'
+		}
+	})
+	.controller('indexCtrl',function($scope,$http){
+		$scope.formSubmit=function(){
+			if($scope.userName==null||$scope.userName==undefined||!myUtils.userVerification.username.test($scope.userName)){
+				return myUtils.myLoadingToast("姓名为中文或英文2-16位", null);
+			}
+			if($scope.userPhone==null||$scope.userPhone==undefined||!myUtils.userVerification.phone.test($scope.userPhone)){
+				return myUtils.myLoadingToast("请填写正确的手机号码", null);
+			}
+			if($scope.userAddress==null||$scope.userAddress==undefined||$scope.userAddress==""){
+				return myUtils.myLoadingToast("请填写联系地址", null);
+			}
+			if($scope.userRemark==null||$scope.userRemark==undefined){
+				$scope.userRemark="";
+			}
+			
+			myUtils.myPrevToast("提交中...", function(){
+				 var channelId="";
+				if(myUtils.GetQueryString("channel_id")!=null){
+					channelId=myUtils.GetQueryString("channel_id");
+				} 
+				console.log(channelId)
+			$http.post("/user/add",{name:$scope.userName,phone:$scope.userPhone,address:$scope.userAddress,remark:$scope.userRemark,channel_id:channelId})
+			.success(function(data,status,headers,config){
+				if(data&& data.code==200){
+					myUtils.myPrevToast("提交成功", null, "remove");
+					$scope.userName="";
+					$scope.userPhone="";
+					$scope.userAddress="";
+					$scope.userRemark="";
+				}
+			})
+			.error(function(data,status,headers,config){
+				myUtils.myPrevToast("提交失败", null, "remove");
+			});
+			}, "add");
+		};
+	});
+	</script>
+</body>
+</html>

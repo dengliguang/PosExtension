@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.ChannelDao">
+<!-- 添加渠道-->
+<insert id="addChannel" parameterType="Channel" flushCache="true">  
+   INSERT IGNORE INTO
+   		 channel_tb (
+   		 name,
+   		 salt,
+   		 <if test="fillTime!=null">fill_time,</if>
+   		 url
+   		 )
+   VALUES
+    	 (#{name},
+    	 #{salt},
+   		 <if test="fillTime!=null">#{fillTime},</if>
+    	 #{url}
+  			)  
+</insert> 
+<!-- 更新渠道 -->
+<update id="updateChannel" parameterType="Channel" >  
+    UPDATE 
+    	channel_tb 
+    SET 
+     channel_id=#{channelId},
+     name=#{name},
+     url=#{url},
+     salt=#{salt},
+     fill_time=#{fillTime}
+    WHERE
+    	 channel_id=#{channelId}  
+</update> 
+
+<!-- 加载渠道-->
+<select id="loadChannel" parameterType="Integer" resultType="Channel" >
+SELECT 
+	 channel_id,
+     name,
+     url,
+     salt,
+     fill_time
+FROM channel_tb 
+WHERE channel_id=#{channelId}
+</select>
+<!-- 根据盐装载渠道-->
+<select id="loadChannelBySalt" parameterType="String" resultType="Channel" >
+SELECT 
+	 channel_id,
+     name,
+     url,
+     salt,
+     fill_time
+FROM channel_tb 
+WHERE salt=#{salt}
+</select>
+<!-- 分页查询渠道 -->
+<select id="searchChannel" resultType="Channel">  
+    SELECT
+     channel_id,
+     name,
+     url,
+     salt,
+     fill_time 
+	FROM channel_tb
+	ORDER BY
+		fill_time
+	DESC LIMIT
+		#{pageNum},#{pageSize} 
+</select>
+<!-- 查询所有渠道 -->
+<select id="browseChannel" resultType="Channel">  
+    SELECT
+     channel_id,
+     name,
+     url,
+     salt,
+     fill_time
+    FROM channel_tb 
+	ORDER BY
+		fill_time
+	DESC 
+</select>
+
+<!-- 删除渠道-->
+<delete id="delChannel"  parameterType="Integer">  
+    DELETE FROM
+    	 channel_tb WHERE channel_id=#{channelId}
+</delete>  
+ 
+</mapper>

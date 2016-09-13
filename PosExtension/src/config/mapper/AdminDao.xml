@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.AdminDao">
+<!-- 管理员登录-->
+<select id="adminLogin"  resultType="Admin">  
+    SELECT
+	 	admin_id,
+	 	name,
+	 	password,
+	 	update_time 
+	FROM admin_tb
+	WHERE name=#{name} and password=#{password}
+</select>  
+<!-- 检查管理员是否存在 -->
+<select id="chkLoginName" resultType="boolean">  
+    SELECT
+	 	count(admin_id)
+	FROM admin_tb
+	WHERE name=#{name}
+</select> 
+<!-- 更新商品 -->
+<update id="updateAdmin" parameterType="Admin" >  
+    UPDATE 
+    	admin_tb 
+    SET 
+     admin_id=#{adminId},
+     name=#{name},
+     password=#{password},
+     update_time=#{updateTime}
+    WHERE
+    	 admin_id=#{adminId}  
+</update> 
+
+<!-- 加载单个管理员-->
+<select id="loadAdmin" parameterType="Integer" resultType="Admin" >
+SELECT 
+	 admin_id,
+     name,
+     password,
+     update_time
+FROM admin_tb 
+WHERE admin_id=#{adminId}
+</select>
+
+ 
+</mapper>

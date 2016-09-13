@@ -1,0 +1,27 @@
+ 	<!-- 渠道管理 -->
+<div class="button-group" id="channelBtnGroup" style="margin-top:10px;width:800px;">
+  <button type="button" class="btn  btn-success" style="width:155px;" ui-sref="main.channelinfo.channellist">渠道列表</button>
+ <button type="button" class="btn  btn-danger" style="width:155px;margin:10px 0;"   ui-sref="main.channelinfo.channeladd">+添加渠道</button>
+ </div>
+ <div class="text-danger">*注意：有客户的渠道链接只能修改名称，不能删除</div>
+<hr/>
+	<!-- 列表、添加、修改 -->
+	<div ui-view></div>
+	<!-- 列表、添加、修改end -->
+
+<div class="pagination-warp">
+  <!-- <ul class="pagination pagination-lg">
+    <li>
+      <a href="#" id="prevElement" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="pageNumber"><a href="#">1</a></li>
+    <li>
+      <a href="#" id="nextElement" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul> -->
+  <ul class="pagination pagination-lg" id="channelPagination"></ul>
+</div>
